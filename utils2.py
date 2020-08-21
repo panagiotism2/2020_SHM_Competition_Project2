@@ -48,6 +48,8 @@ def get_features(data_raw):
     import numpy as np
     import statsmodels.api as sm
     import matplotlib.pyplot as plt
+    plt.ioff()
+    import matplotlib.pyplot 
     from scipy import signal
     from scipy.fft import fft
     import math
@@ -218,9 +220,20 @@ def get_features(data_raw):
             lta=movingAverage(data_ch_noNans,LTAdur)   
             
             # Get the distribution of the short-, medium-, and long-term moving average values
-            Pshort = plt.hist(sta,bins=n_bins)[0]
-            Pmedium = plt.hist(mta,bins=n_bins)[0]
+            fig = matplotlib.figure.Figure()
+            ax = matplotlib.axes.Axes(fig, (0,0,0,0))
+            Pshort = ax.hist(sta,bins=n_bins)[0]
+            del ax, fig
+            
+            fig = matplotlib.figure.Figure()
+            ax = matplotlib.axes.Axes(fig, (0,0,0,0))
+            Pmedium = ax.hist(mta,bins=n_bins)[0]
+            del ax, fig
+
+            fig = matplotlib.figure.Figure()
+            ax = matplotlib.axes.Axes(fig, (0,0,0,0))
             Plong = plt.hist(lta,bins=n_bins)[0]
+            del ax, fig
             
             # Variance
             VarSTAdist[i] = np.var(Pshort)
